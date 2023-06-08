@@ -51,7 +51,7 @@ public class Main {
         }
         executorService.invokeAll(tasks);
         executorService.shutdown();
-        test();
+        createHTML();
 
 
     }
@@ -84,15 +84,9 @@ public class Main {
             Elements spanWhen = e.select("span.play-time");
             String spanStr = spanWhen.text();
             String whenStr = tdStr.replace(spanStr, "").trim();
-            whenStr = LocalDate.now().getYear() + " " + whenStr.toUpperCase();
+//            whenStr = LocalDate.now().getYear() + " " + whenStr.toUpperCase();
 
-            DateTimeFormatter dtfForDate = new DateTimeFormatterBuilder()
-                    .parseCaseInsensitive()
-                    .parseDefaulting(ChronoField.YEAR, LocalDate.now().getYear())
-                    .appendPattern("yyyy dd MMM HH:mm")
-                    .toFormatter(Locale.ENGLISH);
 
-            LocalDateTime start = LocalDateTime.parse(whenStr, dtfForDate);
 
             String sportAndLeague = e.select("td.meta > span").text();
             String[] split = sportAndLeague.split("/");
@@ -103,7 +97,7 @@ public class Main {
                                 .url(url)
                                 .team1(teams.get(0))
                                 .team2(teams.get(1))
-                                .start(start)
+                                .start(whenStr)
                                 .sport(split[0])
                                 .tournament(split[1] + " " + split[2])
                                 .build());
@@ -112,7 +106,7 @@ public class Main {
         }
     }
 
-    public static void test() {
+    public static void createHTML() {
         var resolver = new ClassLoaderTemplateResolver();
         resolver.setTemplateMode(TemplateMode.HTML);
         resolver.setCharacterEncoding("UTF-8");
@@ -121,7 +115,6 @@ public class Main {
 
         var context = new Context();
         context.setVariable("data", matches);
-        context.setVariable("df", DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
 
         var templateEngine = new TemplateEngine();
         templateEngine.setTemplateResolver(resolver);

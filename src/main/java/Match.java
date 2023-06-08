@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class Match {
-    private LocalDateTime start;
+    private String start;
     private String team1;
     private String team2;
     private String tournament;

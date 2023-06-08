@@ -16,7 +16,7 @@
     <script src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
     <script language="javascript" type="text/javascript">
     $(document).ready( function () {
-        $.fn.dataTable.moment( 'D.MM.YYYY H:m' );
+        $.fn.dataTable.moment( 'D MMM H:m' );
         $('#dataTable').DataTable();
     } );
 
@@ -42,10 +42,7 @@
         <tbody>
 
         <tr th:each="match : ${data}">
-<!--            <td th:text="${match.start}"></td>-->
-            <td th:text="${df.format(match.start)}"></td>
-<!--            <p th:text="${#temporals.formatISO(match.start)}"></p>-->
-
+            <td th:text="${match.start}"></td>
             <td th:text="${match.team1}"></td>
             <td th:text="${match.team2}"></td>
             <td th:text="${match.tournament}"></td>
