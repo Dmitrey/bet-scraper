@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sample Thymeleaf template</title>
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" language="javascript"
+            src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js" ></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.16/sorting/datetime-moment.js"></script>
+    <script language="javascript" type="text/javascript">
+    $(document).ready( function () {
+        $.fn.dataTable.moment( 'D.MM.YYYY H:m' );
+        $('#dataTable').DataTable();
+    } );
+
+    </script>
+</head>
+<body>
+
+<table>
+
+    <table class="table table-striped" id="dataTable" data-page-length='50' data-order='[[1, "desc"]]'>
+        <thead>
+        <tr>
+
+            <th scope="col">start</th>
+            <th scope="col">team1</th>
+            <th scope="col">team2</th>
+            <th scope="col">tournament</th>
+            <th scope="col">sport</th>
+            <th scope="col">url</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="match : ${data}">
+<!--            <td th:text="${match.start}"></td>-->
+            <td th:text="${df.format(match.start)}"></td>
+<!--            <p th:text="${#temporals.formatISO(match.start)}"></p>-->
+
+            <td th:text="${match.team1}"></td>
+            <td th:text="${match.team2}"></td>
+            <td th:text="${match.tournament}"></td>
+            <td th:text="${match.sport}"></td>
+            <td>
+                <a th:href="${match.url}" th:text="${match.url}" target="_blank" />
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</table>
+
+</body>
+</html>
